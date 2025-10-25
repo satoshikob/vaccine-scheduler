@@ -1,3 +1,5 @@
+st.set_page_config(layout="wide")
+
 import streamlit as st
 import pandas as pd
 
@@ -114,5 +116,6 @@ with col2:
 
 st.write("---")
 st.caption("vaccine for allのサイトを元に作成。")
+
 
 
