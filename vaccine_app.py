@@ -5,7 +5,6 @@ st.set_page_config(layout="wide")
 
 st.title("💉 予防接種スケジュール表示アプリ")
 
-
 # 年齢入力（歳と月齢を分ける）
 years = st.number_input("年齢（歳）", min_value=0, max_value=100, step=1, value=0)
 months = st.number_input("月齢（追加の月）", min_value=0, max_value=11, step=1, value=0)
@@ -99,8 +98,8 @@ with col1:
         years_show = closest_age // 12
         months_show = closest_age % 12
         st.markdown(f"**{years_show}歳{months_show}か月（{closest_age}か月）時点の推奨接種**:")
-        df = pd.DataFrame({"ワクチン": vaccines})
-        st.table(df)
+        for v in vaccines:
+            st.write(f"- {v}")
     else:
         st.info("この年齢に近いスケジュールはまだ登録されていません。")
 
@@ -117,7 +116,3 @@ with col2:
 
 st.write("---")
 st.caption("vaccine for allのサイトを元に作成。")
-
-
-
-
