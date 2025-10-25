@@ -1,9 +1,10 @@
-st.set_page_config(layout="wide")
-
 import streamlit as st
 import pandas as pd
 
+st.set_page_config(layout="wide")
+
 st.title("💉 予防接種スケジュール表示アプリ")
+
 
 # 年齢入力（歳と月齢を分ける）
 years = st.number_input("年齢（歳）", min_value=0, max_value=100, step=1, value=0)
@@ -116,6 +117,7 @@ with col2:
 
 st.write("---")
 st.caption("vaccine for allのサイトを元に作成。")
+
 
 
 
