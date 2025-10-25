@@ -113,4 +113,5 @@ with col2:
                         st.write(f"- {line}")
 
 st.write("---")
-st.caption("※厚生労働省推奨の標準的スケジュールをもとに作成（目安）。実際の接種は医師にご相談ください。")
+st.caption("vaccine for allのサイトを元に作成。")
+
