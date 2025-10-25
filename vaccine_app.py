@@ -90,7 +90,7 @@ closest_age = max([m for m in schedule.keys() if m <= age_in_months], default=No
 col1, col2 = st.columns([2,3])
 
 with col1:
-    st.subheader("📅 標準的なスケジュール")
+    st.subheader("📅 標準スケジュール")
     if closest_age is not None:
         vaccines = schedule[closest_age]
         years_show = closest_age // 12
@@ -114,4 +114,5 @@ with col2:
 
 st.write("---")
 st.caption("vaccine for allのサイトを元に作成。")
+
 
