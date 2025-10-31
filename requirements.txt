@@ -1,2 +1,4 @@
 streamlit
-matplotlib
+pandas
+gspread
+oauth2client
