@@ -1,29 +1,33 @@
 import streamlit as st
 import pandas as pd
 import gspread
+from google.oauth2.service_account import Credentials
 
 st.set_page_config(layout="wide")
 st.title("💉 予防接種スケジュール（Google共有版・無料）")
 
-# === GoogleスプレッドシートURL ===
-sheet_url = "https://docs.google.com/spreadsheets/d/1_5KXhHhLSLZv2FazFV7S1hTS6YY-JjDwEs0uzFpniqM/edit?gid=0"
+# ===== Google認証 =====
+scope = ["https://spreadsheets.google.com/feeds",
+         "https://www.googleapis.com/auth/drive"]
 
-# 公開シートを読み取る（認証不要）
-gc = gspread.client.Client(None)
+credentials = Credentials.from_service_account_info(
+    st.secrets["gcp_service_account"],
+    scopes=scope
+)
+
+gc = gspread.authorize(credentials)
+
+# ===== スプレッドシートを開く =====
+sheet_url = "https://docs.google.com/spreadsheets/d/1_5KXhHhLSLZv2FazFV7S1hTS6YY-JjDwEs0uzFpniqM/edit?gid=0"
 spreadsheet = gc.open_by_url(sheet_url)
 worksheet = spreadsheet.get_worksheet(0)
 
-# === データ読み込み ===
+# ===== データ読み込み =====
 data = worksheet.get_all_records()
 df = pd.DataFrame(data)
+st.dataframe(df)
 
-st.subheader("📋 登録済みデータ")
-if not df.empty:
-    st.dataframe(df)
-else:
-    st.info("まだデータがありません。")
-
-# === 新規登録フォーム ===
+# ===== 追加フォーム =====
 st.subheader("🧑‍⚕️ 新しい患者データを追加")
 name = st.text_input("患者名")
 vaccine = st.text_input("ワクチン名")
