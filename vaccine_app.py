@@ -5,24 +5,25 @@ import gspread
 st.set_page_config(layout="wide")
 st.title("💉 予防接種スケジュール（Google共有版・無料）")
 
-# GoogleスプレッドシートURL（あなたの共有リンク）
+# === GoogleスプレッドシートURL ===
 sheet_url = "https://docs.google.com/spreadsheets/d/1_5KXhHhLSLZv2FazFV7S1hTS6YY-JjDwEs0uzFpniqM/edit?gid=0"
-gc = gspread.oauth()
 
-# シートを開く（ワークシート名を確認して必要なら変更）
-sh = gc.open_by_url(sheet_url)
-worksheet = sh.get_worksheet(0)
+# 公開シートを読み取る（認証不要）
+gc = gspread.client.Client(None)
+spreadsheet = gc.open_by_url(sheet_url)
+worksheet = spreadsheet.get_worksheet(0)
 
-# 既存データを取得
+# === データ読み込み ===
 data = worksheet.get_all_records()
 df = pd.DataFrame(data)
+
 st.subheader("📋 登録済みデータ")
 if not df.empty:
     st.dataframe(df)
 else:
     st.info("まだデータがありません。")
 
-# 新規登録フォーム
+# === 新規登録フォーム ===
 st.subheader("🧑‍⚕️ 新しい患者データを追加")
 name = st.text_input("患者名")
 vaccine = st.text_input("ワクチン名")
